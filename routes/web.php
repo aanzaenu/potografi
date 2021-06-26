@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes([
+    'reset' => false
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/json/getphonebrand', 'HomeController@getphonebrand')->name('json.getphonebrand');
+Route::post('/json/getphone', 'RegisterController@getphone')->name('json.getphone');

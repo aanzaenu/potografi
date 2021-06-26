@@ -52,7 +52,18 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'phone' => ['required', 'max:255'],
+            'dob' => ['required'],
+            'phone_name' => ['required'],
+            'phone_series' => ['required'],
+        ],[
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah terdaftar',
+            'password.required' => 'Password harus diisi',
+            'password.min' => 'Password minimal 8 karakter'
         ]);
     }
 
@@ -68,6 +79,31 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
+            'dob' => $data['dob'],
+            'phone_name' => $data['phone_name'],
+            'phone_series' => $data['phone_series'],
+            'description' => $data['description'],
         ]);
+    }
+    public function showRegistrationForm()
+    {
+        $datas = file_get_contents(public_path('json/mobiles.json'));
+        $json = json_decode($datas);
+        $array = array();
+        $nomor = 0;
+        $bren = '';
+        foreach($json as $key=>$value)
+        {
+            if($bren == $value->brand){
+                continue;
+            }else{
+                $array[$nomor]['brand'] = $value->brand;
+                $nomor++;
+            }
+            $bren = $value->brand;
+        }
+        $data['brands'] = $array;
+        return view('auth.register', $data);
     }
 }

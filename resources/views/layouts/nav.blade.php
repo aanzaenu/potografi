@@ -74,6 +74,25 @@
                                     
                                 </a>
                             </li>
+                            @guest
+                                <li>
+                                    <a href="{{ route('login') }}">
+                                        Login
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            @endguest
                         </ul>
                         <div class="nk-gap-3 d-none d-lg-block"></div>
                         <div class="nk-gap-3"></div>

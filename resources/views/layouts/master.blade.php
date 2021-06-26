@@ -40,10 +40,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/justifiedGallery/dist/css/justifiedGallery.min.css') }}" media="all">
 
     <!-- Skylith -->
-    <link rel="stylesheet" href="{{ asset('assets/css/skylith.min.css') }}" media="all">
+    <link rel="stylesheet" href="{{ asset('assets/css/skylith-red.min.css') }}" media="all">
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" media="all">
+    @yield('style')
 </head>
 <body>
     <div id="app">
@@ -108,5 +109,6 @@
     <!-- Skylith -->
     <script src="{{ asset('assets/js/skylith.min.js') }}"></script>
     <script src="{{ asset('assets/js/skylith-init.js') }}"></script>
+    @yield('script')
 </body>
 </html>

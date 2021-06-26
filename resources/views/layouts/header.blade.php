@@ -1,5 +1,5 @@
 <header class="nk-header">
-    <nav class="nk-navbar nk-navbar-top nk-navbar-transparent nk-navbar-sticky">
+    <nav class="nk-navbar nk-navbar-top nk-navbar-sticky">
         <div class="container">
             <div class="nk-nav-table">
                 <a href="{{ url('/') }}" class="nk-nav-logo">
