@@ -63,7 +63,11 @@ class RegisterController extends Controller
             'email.email' => 'Email tidak valid',
             'email.unique' => 'Email sudah terdaftar',
             'password.required' => 'Password harus diisi',
-            'password.min' => 'Password minimal 8 karakter'
+            'password.min' => 'Password minimal 8 karakter',
+            'phone.required' => 'No.Telepon harus diisi',
+            'dob.required' => 'Tempat Tanggal Lahir harus diisi',
+            'phone_name.required' => 'Merk Handphone/Smartphone tidak boleh kosong',
+            'phone_series.required' => 'Seri Handphone/Smartphone tidak boleh kosong',
         ]);
     }
 
@@ -75,16 +79,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $dob = date('Y-m-d', strtotime($data['dob']));
+        $createuser = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone' => $data['phone'],
-            'dob' => $data['dob'],
+            'dob' => $dob,
             'phone_name' => $data['phone_name'],
             'phone_series' => $data['phone_series'],
             'description' => $data['description'],
         ]);
+        
+        $createuser->roles()->attach(3);
+        return $createuser;
     }
     public function showRegistrationForm()
     {

@@ -36,6 +36,9 @@
         background-color: #FFFFFF;
         opacity: 1;
     }
+    .is-invalid .invalid-feedback{
+        display: block;
+    }
 </style>
 @endsection
 @section('content')
@@ -62,7 +65,7 @@
     
                             <div class="form-group">
                                 <label for="name" class="text-md-right">{{ __('Nama') }}</label>
-                                <input id="name" type="text" class="form-control required @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Nama Anda" autofocus>
+                                <input id="name" type="text" class="form-control required @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  autocomplete="name" placeholder="Nama Anda" autofocus required>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -73,7 +76,7 @@
     
                             <div class="form-group">
                                 <label for="email" class="text-md-right">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control required @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Anda">
+                                <input id="email" type="email" class="form-control required @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email" placeholder="Email Anda" required>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -84,7 +87,7 @@
     
                             <div class="form-group">
                                 <label for="password" class="text-md-right">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control required @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password Anda">
+                                <input id="password" type="password" class="form-control required @error('password') is-invalid @enderror" name="password"  autocomplete="new-password" placeholder="Password Anda" required>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -94,7 +97,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone" class="text-md-right">{{ __('No.Telepon') }}</label>
-                                <input id="phone" type="text" class="form-control required @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required placeholder="No.Telepon Anda" data-method="number">
+                                <input id="phone" type="text" class="form-control required @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  placeholder="No.Telepon Anda" data-method="number" required>
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -104,7 +107,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="dob" class="text-md-right">{{ __('Tempat Tanggal Lahir') }}</label>
-                                <input id="dob" type="text" class="form-control required @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}" required placeholder="Tempat Tanggal Lahir Anda" data-method="datepicker" readonly>
+                                <input id="dob" type="text" class="form-control required @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') }}"  placeholder="Tempat Tanggal Lahir Anda" data-method="datepicker" readonly required>
 
                                 @error('dob')
                                     <span class="invalid-feedback" role="alert">
@@ -112,9 +115,9 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group @error('phone_series') is-invalid @enderror">
+                            <div class="form-group @error('phone_name') is-invalid @enderror">
                                 <label for="phone_name" class="text-md-right">{{ __('Merk Handphone/Smartphone') }}</label>
-                                <select name="phone_name" id="phone_name" class="custom-select required @error('phone_name') is-invalid @enderror" required data-method="select2">
+                                <select name="phone_name" id="phone_name" class="custom-select  @error('phone_name') is-invalid @enderror"  data-method="select2">
                                     <option value="">Pilih Merk Handphone/Smartphone</option>
                                     @foreach ($brands as $item)
                                         <option value="{{$item['brand'] }}" {{ old('phone_name') == $item['brand'] ? 'selected' : '' }}>{{ $item['brand'] }}</option>
@@ -127,11 +130,20 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
+                            <div class="form-group @error('phone_series') is-invalid @enderror">
                                 <label for="phone_series" class="text-md-right">{{ __('Seri Handphone/Smartphone') }}</label>
-                                <select name="phone_series" id="phone_series" class="custom-select required @error('phone_series') is-invalid @enderror" required data-method="select2">
-                                    <option value="">Seri Hanphone/Smarphone Anda</option>
-                                </select>
+                                <div class="phoneseries">
+                                    @if (old('phone_name') == 'Merk Lainnya')
+                                        <input name="phone_series" id="phone_series" class="form-control  @error('phone_series') is-invalid @enderror" placeholder="Seri Hanphone/Smarphone Anda" value="{{ old('phone_series') }}"/>
+                                    @else
+                                        <select name="phone_series" id="phone_series" class="custom-select  @error('phone_series') is-invalid @enderror"  data-method="select2">
+                                            <option value="">Seri Hanphone/Smarphone Anda</option>
+                                            @if (old('phone_series'))
+                                                <option value="{{ old('phone_series') }}" {{ old('phone_series') ? 'selected' : '' }}>{{ old('phone_series') }}</option>                                                
+                                            @endif
+                                        </select>                                    
+                                    @endif
+                                </div>
 
                                 @error('phone_series')
                                     <span class="invalid-feedback" role="alert">
@@ -180,7 +192,8 @@
             }
         });
         $('input[data-method="datepicker"]').datepicker({
-            format: 'mm/dd/yyyy'
+            format: 'yyyy-mm-dd',
+            autoclose: true,
         });
         $('select[data-method="select2"]').select2();        
         $('input[data-method="number"]').keypress(function(value) {
@@ -206,21 +219,34 @@
                         {
                             $('select[name="phone_series"]').select2('destroy');
                             $('select[name="phone_series"]').html('<option value="">Seri Hanphone/Smarphone Anda</option>');
-                            for(var i=0; i < response.length; i++)
-                            {
-                                var htm = '<option value='+response[i].name+'>'+response[i].name+'</option>';
-                                $('select[name="phone_series"]').append(htm);
-                            }
                             if(val == 'Merk Lainnya')
                             {
                                 $('select[name="phone_series"]').val('-');
+                                $('.phoneseries').html('<input name="phone_series" id="phone_series" class="form-control" placeholder="Seri Hanphone/Smarphone Anda"/>');
+                            }else{
+                                var htms = '<select name="phone_series" id="phone_series" class="custom-select" data-method="select2">';
+                                htms += '<option value="">Seri Hanphone/Smarphone Anda</option>';
+                                for(var i=0; i < response.length; i++)
+                                {
+                                    htms += '<option value="'+response[i].name+'">'+response[i].name+'</option>';
+                                }
+                                htms += '</select>';
+                                $('.phoneseries').html(htms);
+                                @if(old('phone_name') !== 'Merk Lainnya' && old('phone_name') !== '')
+                                var pseries = "{{ old('phone_series') }}";
+                                    $('select[name="phone_series"]').val(pseries);                                
+                                @endif
+                                $('select[name="phone_series"]').select2();
                             }
-                            $('select[name="phone_series"]').select2();
                         }
                     }
                 });
             }
         }
+        @if(old('phone_name') !== 'Merk Lainnya' && old('phone_name') !== '')
+        var val = "{{ old('phone_name') }}";
+            setPhoneSeries(val);
+        @endif
     });
 </script>
 @endsection
