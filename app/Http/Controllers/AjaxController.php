@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
+class AjaxController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -13,7 +13,6 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
     }
 
     /**
@@ -21,6 +20,7 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    
     protected function getphone(Request $request)
     {
         if ($request->ajax())

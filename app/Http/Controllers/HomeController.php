@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use App\Image;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data['lists'] = Image::where('owner', Auth::user()->id)->orderBy('id', 'DESC')->paginate(12);
+        return view('home', $data);
     }
 }
