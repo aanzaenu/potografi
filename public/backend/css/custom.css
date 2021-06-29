@@ -1,0 +1,81 @@
+.checkbox-alien input[type="checkbox"]:checked + label::before {
+	background-color: #1594E5;
+	border-color: #1594E5;
+}
+.checkbox-alien input[type="checkbox"]:checked + label::after {
+	border-color: #fff;
+}
+.btn-alien {
+	color: #fff;
+	background-color: #1594E5;
+	border-color: #1594E5;
+	box-shadow: 0 0 0 rgba(21, 148, 229, 0.5);
+}
+.text-alien {
+	color: #1594E5;
+}
+table.mytable thead .sorting{
+	position: relative;
+	min-width: 150px;
+}
+table.mytable thead .sorting::before, table.mytable thead .sorting_asc::before, table.mytable thead .sorting_asc_disabled::before, table.mytable thead .sorting_desc::before, table.mytable thead .sorting_desc_disabled::before {
+	right: 1em;
+	content: "\f0de";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	font-size: 1rem;
+}
+table.mytable thead .sorting::after, table.mytable thead .sorting_asc::after, table.mytable thead .sorting_asc_disabled::after, table.mytable thead .sorting_desc::after, table.mytable thead .sorting_desc_disabled::after {
+	content: "\f0dd";
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+	right: 16px;
+	font-size: 1rem;
+}
+table.mytable thead .sorting::after, table.mytable thead .sorting::before, table.mytable thead .sorting_asc::after, table.mytable thead .sorting_asc::before, table.mytable thead .sorting_asc_disabled::after, table.mytable thead .sorting_asc_disabled::before, table.mytable thead .sorting_desc::after, table.mytable thead .sorting_desc::before, table.mytable thead .sorting_desc_disabled::after, table.mytable thead .sorting_desc_disabled::before {
+	position: absolute;
+	bottom: .7em;
+	display: block;
+	opacity: .3;
+}
+table.mytable thead .sorting_asc::before, table.mytable thead .sorting_desc::after {
+	opacity: 1;
+}
+.on-hover{
+	position: absolute;
+	background-color: rgba(0,0,0,0.8);
+	background-position: center;
+	background-size: cover;
+	top: 100%;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	transition-timing-function: ease-out;
+	transition: 0.2s;
+	cursor: pointer;
+	flex-direction: column;
+}
+.on-hover i{
+	font-size: 22px;
+}
+.kover{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	position: absolute;
+	top:0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+.innerlistimage:hover .on-hover, .kontainergambar:hover .on-hover{
+	top: 0;
+	transition-timing-function: ease-in;
+	transition: 0.2s;
+}

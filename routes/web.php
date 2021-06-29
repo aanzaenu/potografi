@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('main');
 
 Auth::routes([
     'reset' => false
@@ -26,3 +26,10 @@ Route::get('/json/getphonebrand', 'HomeController@getphonebrand')->name('json.ge
 Route::post('/json/getphone', 'AjaxController@getphone')->name('json.getphone');
 Route::resource('/user','UserController', ['except' => ['show', 'add', 'store']]);
 Route::resource('/images','ImageController', ['except' => ['show']]);
+
+Route::namespace('Panel')->prefix('panel')->name('panel.')->group(function(){
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::resource('/user','UserController', ['except' => ['show', 'add', 'store']]);
+    Route::resource('/image','ImageController', ['except' => ['show']]);
+    Route::any('/image/search','ImageController@search')->name('image.search');
+});
